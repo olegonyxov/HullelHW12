@@ -1,9 +1,10 @@
 // prepare data
-let productNumber;
-let productAmount;
-let price;
 const discount = 0.2;
 const discountStartsFrom = 10000;
+let productNumber;
+let productIndex;
+let productAmount;
+let price;
 let finalPrice;
 
 // show all products with prices
@@ -12,32 +13,35 @@ function showProducts() {
       console.log(`#${i + 1} ${products[i].name} - $${products[i].price}`);
     }
   }
-// +2) show prompt with request to enter product number (validation)
+// show prompt with request to enter product number (validation)
 function enterProductNumber() {
     do {
         productNumber = parseInt(prompt('Enter product number'));
       } while(productNumber < 1 || productNumber > products.length || isNaN(productNumber));  
+    return productNumber  
+}
+// get product index
+function getproductIndex(){
+    productIndex = enterProductNumber() - 1
 }
 
 // show prompt with request to enter product amount (validation)
 function enterProductAmount(){
     do {
         productAmount = parseInt(prompt('Enter amount of products you wanna buy'));
-      } while(productAmount < 1 || productAmount > products[productNumber -1].availability || isNaN(productAmount));
+      } while(productAmount < 1 || productAmount > products[productIndex].availability || isNaN(productAmount));
 }
 // calculate price
 function calculatePrice(){
-    price = products[productNumber -1].price*productAmount
+    price = products[productIndex].price*productAmount
 }
 // check if discount available
 function  checkDiscount(){
     if (price >= discountStartsFrom){
         return true
-    } else {
-        return false
-    }           
+    }     
 }
-// if so - calculate discount
+//calculate discount
 function calculateDiscount(){
     if (checkDiscount()){
         finalPrice = price - price * discount;
@@ -47,12 +51,12 @@ function calculateDiscount(){
 }
 // then show final price
 function showFinalPrice(){
-    alert(finalPrice)
+    alert(`Total price : $${finalPrice}`)
 }
 
 
   showProducts()
-  enterProductNumber()
+  getproductIndex()
   enterProductAmount()
   calculatePrice()
   calculateDiscount()
