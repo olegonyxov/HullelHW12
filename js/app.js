@@ -18,11 +18,11 @@ function enterProductNumber() {
     do {
         productNumber = parseInt(prompt('Enter product number'));
       } while(productNumber < 1 || productNumber > products.length || isNaN(productNumber));  
-    return productNumber  
+    return productNumber;
 }
 // get product index
 function getproductIndex(){
-    productIndex = enterProductNumber() - 1
+    productIndex = enterProductNumber() - 1;
 }
 
 // show prompt with request to enter product amount (validation)
@@ -33,12 +33,12 @@ function enterProductAmount(){
 }
 // calculate price
 function calculatePrice(){
-    price = products[productIndex].price*productAmount
+    price = products[productIndex].price*productAmount;
 }
 // check if discount available
 function  checkDiscount(){
     if (price >= discountStartsFrom){
-        return true
+        return true;
     }     
 }
 //calculate discount
@@ -46,12 +46,12 @@ function calculateDiscount(){
     if (checkDiscount()){
         finalPrice = price - price * discount;
     } else {
-        finalPrice = price
+        finalPrice = price;
     }
 }
 // then show final price
 function showFinalPrice(){
-    alert(`Total price : $${finalPrice}`)
+    alert(`Total price : $${finalPrice}`);
 }
 
 
