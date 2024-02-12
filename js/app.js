@@ -1,58 +1,64 @@
-/*
-+0) prepare data
-+1) show all products with prices
-+2) show prompt with request to enter product number (validation)
-+3) show prompt with request to enter product amount (validation)
-+4) calculate price
-+5) check if discount available
-+6) if so - calculate discount
-+7) then show final price
-
-*/
-
-
-// 1
-
-function showProducts() {
-  for (let i = 0; i < products.length; i++) {
-    console.log(`#${i + 1} ${products[i].name} - $${products[i].price}`);
-  }
-}
-
-
-
-showProducts();
-
-
-// 2
-let productNumber;
-do {
-  productNumber = parseInt(prompt('Enter product number'));
-} while(productNumber < 1 || productNumber > products.length || isNaN(productNumber));
-
-// 4
-const productToBuy = products[productNumber - 1];
-
-// 3
-let productAmount;
-do {
-  productAmount = parseInt(prompt('Enter amount of products you wanna buy'));
-} while(productAmount < 1 || productAmount > productToBuy.availability || isNaN(productAmount));
-
-
-const price = productToBuy.price * productAmount;
-
-
+// prepare data
 const discount = 0.2;
 const discountStartsFrom = 10000;
+let productNumber;
+let productIndex;
+let productAmount;
+let price;
+let finalPrice;
 
-// 5
-if (price >= discountStartsFrom) {
-  // 6
-  const finalPrice = price - price * discount;
-  // 7
-  console.log(`Congrats! You get discount. Your final price is ${finalPrice}`)
-} else {
-  console.log(`The final price is ${price}`);
+// show all products with prices
+function showProducts() {
+    for (let i = 0; i < products.length; i++) {
+      console.log(`#${i + 1} ${products[i].name} - $${products[i].price}`);
+    }
+  }
+// show prompt with request to enter product number (validation)
+function enterProductNumber() {
+    do {
+        productNumber = parseInt(prompt('Enter product number'));
+      } while(productNumber < 1 || productNumber > products.length || isNaN(productNumber));  
+    return productNumber  
 }
+// get product index
+function getproductIndex(){
+    productIndex = enterProductNumber() - 1
+}
+
+// show prompt with request to enter product amount (validation)
+function enterProductAmount(){
+    do {
+        productAmount = parseInt(prompt('Enter amount of products you wanna buy'));
+      } while(productAmount < 1 || productAmount > products[productIndex].availability || isNaN(productAmount));
+}
+// calculate price
+function calculatePrice(){
+    price = products[productIndex].price*productAmount
+}
+// check if discount available
+function  checkDiscount(){
+    if (price >= discountStartsFrom){
+        return true
+    }     
+}
+//calculate discount
+function calculateDiscount(){
+    if (checkDiscount()){
+        finalPrice = price - price * discount;
+    } else {
+        finalPrice = price
+    }
+}
+// then show final price
+function showFinalPrice(){
+    alert(`Total price : $${finalPrice}`)
+}
+
+
+  showProducts()
+  getproductIndex()
+  enterProductAmount()
+  calculatePrice()
+  calculateDiscount()
+  showFinalPrice()
 
